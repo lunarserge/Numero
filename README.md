@@ -74,10 +74,10 @@ There are couple of self-explaining inline comments in numero.cpp / main re desi
 Numero depends quite a bit on Boost C++ libraries (http://boost.org). See `NOTICE.txt` for the license terms.
 
 I am using Visual Studio 2019 for the development. Perform these steps for a complete build from source:
-1. `git clone --recurse-submodules https://github.com/lunarserge/Numero ` Clones the repository (including the Boost submodule dependency)
+1. `git clone --recurse-submodules https://github.com/lunarserge/Numero ` (clone the repository, including the Boost submodule dependency)
 2. `cd Numero\boost`
-3. `bootstrap` prepares the Boost.Build system for use
-4. `.\b2 --with-program_options --with-date_time` invokes Boost.Build to build required Boost libraries
+3. `bootstrap` (prepare the Boost.Build system for use, see https://www.boost.org/doc/libs/1_75_0/more/getting_started/windows.html#simplified-build-from-source)
+4. `.\b2 --with-program_options --with-date_time` (invoke Boost.Build to build required Boost libraries)
 5. Launch Visual Studio and complete the solution build from there
 
 ## Release 1.0 Notes
