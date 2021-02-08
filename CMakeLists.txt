@@ -1,6 +1,6 @@
 ## SPDX-License-Identifier: MIT
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.16)
 
 set(PROJECT_NAME numero)
 project(${PROJECT_NAME} LANGUAGES CXX)
@@ -10,7 +10,7 @@ if(NOT CMAKE_BUILD_TYPE)
     message(STATUS "Build type not specified: Use Release by default.")
 endif(NOT CMAKE_BUILD_TYPE)
 
-find_package(Boost 1.56 REQUIRED COMPONENTS
+find_package(Boost 1.71 REQUIRED COMPONENTS
              date_time program_options)
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
