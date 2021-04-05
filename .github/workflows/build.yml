@@ -31,7 +31,7 @@ jobs:
         path: build/${{env.BUILD_TYPE}}/numero.exe
 
   linux-build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
