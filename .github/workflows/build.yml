@@ -1,0 +1,74 @@
+name: Build
+
+on: [push, pull_request, workflow_dispatch]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  win-build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Environment
+      run: |
+        echo ${env:BOOST_ROOT_1_72_0}
+        echo "BOOST_ROOT=${env:BOOST_ROOT_1_72_0}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        #choco install boost-msvc-14.2
+
+    - name: Build
+      run: |
+        cmake -B build
+        cmake --build build --config ${env:BUILD_TYPE}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: win-numero
+        path: build/${{env.BUILD_TYPE}}/numero.exe
+
+  linux-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install libboost-date-time-dev libboost-program-options-dev
+
+    - name: Build
+      run: |
+        cmake -B build
+        cmake --build build -j2 --config ${env:BUILD_TYPE}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-numero
+        path: build/numero
+
+  mac-build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Environment
+      run: |
+        brew install boost
+
+    - name: Build
+      run: |
+        cmake -B build
+        cmake --build build -j2 --config ${env:BUILD_TYPE}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: mac-numero
+        path: build/numero
