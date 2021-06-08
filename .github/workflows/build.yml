@@ -18,6 +18,7 @@ jobs:
       uses: MarkusJx/install-boost@v1.0.1
       with:
         boost_version: 1.71.0
+        toolset: msvc14.2
 
     - name: Build
       env:
