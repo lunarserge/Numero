@@ -43,8 +43,8 @@ jobs:
     - name: Build
       run: |
         cmake -B build
-        echo echo cmake --build build --config ${env:BUILD_TYPE}
-        cmake --build build --config ${env:BUILD_TYPE}
+        echo echo cmake --build build --config ${{env:BUILD_TYPE}}
+        cmake --build build --config ${{env:BUILD_TYPE}}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
