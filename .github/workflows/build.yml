@@ -20,8 +20,9 @@ jobs:
 
     - name: Build
       run: |
+        echo echo BOOST_ROOT ${{env.BOOST_ROOT}}
         cmake -B build
-        cmake --build build --config ${env:BUILD_TYPE}
+        cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
@@ -43,7 +44,6 @@ jobs:
     - name: Build
       run: |
         cmake -B build
-        echo echo cmake --build build --config ${{env.BUILD_TYPE}}
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
