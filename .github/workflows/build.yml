@@ -11,14 +11,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.4.0
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v1.0.1
+      uses: MarkusJx/install-boost@v2.1.0
       with:
-        boost_version: 1.73.0
-        toolset: msvc14.2
+        boost_version: 1.78.0
+        platform_version: 2019
+        toolset: msvc
 
     - name: Build
       env:
@@ -28,7 +29,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2.3.1
       with:
         name: win-numero
         path: build/${{env.BUILD_TYPE}}/numero.exe
@@ -37,13 +38,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.4.0
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v1.0.1
+      uses: MarkusJx/install-boost@v2.1.0
       with:
-        boost_version: 1.73.0
+        boost_version: 1.78.0
+        platform_version: 20.04
 
     - name: Build
       env:
@@ -53,7 +55,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2.3.1
       with:
         name: linux-numero
         path: build/numero
@@ -62,11 +64,14 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.4.0
 
     - name: Setup Environment
-      run: |
-        brew install boost
+      id: install-boost
+      uses: MarkusJx/install-boost@v2.1.0
+      with:
+        boost_version: 1.78.0
+        platform_version: 11
 
     - name: Build
       run: |
@@ -74,7 +79,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2.3.1
       with:
         name: mac-numero
         path: build/numero
