@@ -72,6 +72,7 @@ jobs:
       with:
         boost_version: 1.78.0
         platform_version: 11
+        boost_install_dir: /home/runner
 
     - name: Build
       run: |
