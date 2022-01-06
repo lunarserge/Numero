@@ -72,9 +72,10 @@ jobs:
       with:
         boost_version: 1.78.0
         platform_version: 11
-        boost_install_dir: /home/runner
 
     - name: Build
+      env:
+        BOOST_ROOT: ${{steps.install-boost.outputs.BOOST_ROOT}}
       run: |
         cmake -B build
         cmake --build build --config ${{env.BUILD_TYPE}}
