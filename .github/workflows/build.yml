@@ -15,7 +15,7 @@ jobs:
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v2.1.0
+      uses: MarkusJx/install-boost@v2.2.0
       with:
         boost_version: 1.78.0
         platform_version: 2019
