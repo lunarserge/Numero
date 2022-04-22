@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3.0.2
 
     - name: Setup Environment
       id: install-boost
@@ -29,7 +29,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v3.0.0
       with:
         name: win-numero
         path: build/${{env.BUILD_TYPE}}/numero.exe
@@ -38,11 +38,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3.0.2
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v2.1.0
+      uses: MarkusJx/install-boost@v2.2.0
       with:
         boost_version: 1.78.0
         platform_version: 20.04
@@ -55,7 +55,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v3.0.0
       with:
         name: linux-numero
         path: build/numero
@@ -64,11 +64,11 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3.0.2
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v2.1.0
+      uses: MarkusJx/install-boost@v2.2.0
       with:
         boost_version: 1.78.0
         platform_version: 11
@@ -81,7 +81,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v3.0.0
       with:
         name: mac-numero
         path: build/numero
