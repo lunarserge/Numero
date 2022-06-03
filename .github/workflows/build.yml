@@ -2,8 +2,8 @@ name: Build
 
 on:
   schedule:
-    # Run daily
-    - cron:  '0 7 * * *'
+    # Run each Sun
+    - cron: '0 0 * * 0'
   push:
   pull_request:
   workflow_dispatch:
