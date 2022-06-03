@@ -21,9 +21,9 @@ jobs:
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v2.2.0
+      uses: MarkusJx/install-boost@v2.3.0
       with:
-        boost_version: 1.78.0
+        boost_version: 1.79.0
         platform_version: 2019
         toolset: msvc
 
@@ -35,7 +35,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3.0.0
+      uses: actions/upload-artifact@v3.1.0
       with:
         name: win-numero
         path: build/${{env.BUILD_TYPE}}/numero.exe
@@ -48,9 +48,9 @@ jobs:
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v2.2.0
+      uses: MarkusJx/install-boost@v2.3.0
       with:
-        boost_version: 1.78.0
+        boost_version: 1.79.0
         platform_version: 20.04
 
     - name: Build
@@ -61,7 +61,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3.0.0
+      uses: actions/upload-artifact@v3.1.0
       with:
         name: linux-numero
         path: build/numero
@@ -74,9 +74,9 @@ jobs:
 
     - name: Setup Environment
       id: install-boost
-      uses: MarkusJx/install-boost@v2.2.0
+      uses: MarkusJx/install-boost@v2.3.0
       with:
-        boost_version: 1.78.0
+        boost_version: 1.79.0
         platform_version: 11
 
     - name: Build
@@ -87,7 +87,7 @@ jobs:
         cmake --build build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3.0.0
+      uses: actions/upload-artifact@v3.1.0
       with:
         name: mac-numero
         path: build/numero
