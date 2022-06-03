@@ -24,7 +24,7 @@ jobs:
       uses: MarkusJx/install-boost@v2.3.0
       with:
         boost_version: 1.79.0
-        platform_version: 2019
+        platform_version: 2022
         toolset: msvc
 
     - name: Build
