@@ -121,7 +121,7 @@ std::ifstream prepare(int argc, char** argv) {
 
 	std::ifstream in{input_file};
 	if (in.fail()) {
-		print_diagnostics_and_exit("No input file is selected. Exiting. ", exe, options);
+		print_diagnostics_and_exit("No input file is selected. Exiting.", exe, options);
 	}
 
 	boost::posix_time::time_facet *output_facet = new boost::posix_time::time_facet();
