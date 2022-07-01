@@ -120,7 +120,11 @@ std::ifstream prepare(int argc, char** argv) {
 	}
 
 	std::ifstream in{input_file};
-	if (in.fail()) {
+	// if no input file and help flag is not selected, print error
+	if(input_file.size() < 1 && !vm.count(OPT_HELP)){
+		print_diagnostics_and_exit("No input file selected.", exe, options);
+	}
+	if (in.fail() && !vm.count(OPT_HELP)) {
 		print_diagnostics_and_exit(std::string{"Input file "} + input_file + " can not be read", exe, options);
 	}
 
