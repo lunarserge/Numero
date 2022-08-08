@@ -10,6 +10,7 @@ if(NOT CMAKE_BUILD_TYPE)
     message(STATUS "Build type not specified: Use Release by default.")
 endif(NOT CMAKE_BUILD_TYPE)
 
+set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost 1.71 REQUIRED COMPONENTS
              date_time program_options)
 
@@ -32,3 +33,5 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD_REQUIRED YES)
 
 target_link_libraries(${PROJECT_NAME} Boost::date_time Boost::program_options)
+
+add_subdirectory(test)

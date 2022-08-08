@@ -1,0 +1,9 @@
+Usage: "numero" [options] Dates.csv
+
+Options:
+  --h                   produce help message
+  --n arg (=100)        limit number of holidays in the output to n lines
+  --tz arg              specify output time zone (see README for details)
+
+Dates.csv: input dates in CSV (Comma Delimited) format as per README
+
