@@ -111,7 +111,17 @@ std::ifstream prepare(int argc, char** argv) {
 	}
 	boost::program_options::notify(vm);
 
-	if (vm.count(OPT_HELP)) {
+	bool help = vm.count(OPT_HELP);
+	if (input_file.empty()) {
+		if (help) {
+			print_help(exe, options);
+			exit(0);
+		} else {
+			print_diagnostics_and_exit("No input dates file is selected", exe, options);
+		}
+	}
+
+	if (help) {
 		print_help(exe, options);
 	}
 
@@ -120,11 +130,7 @@ std::ifstream prepare(int argc, char** argv) {
 	}
 
 	std::ifstream in{input_file};
-	// if no input file and help flag is not selected, print error
-	if(input_file.size() < 1 && !vm.count(OPT_HELP)){
-		print_diagnostics_and_exit("No input file selected.", exe, options);
-	}
-	if (in.fail() && !vm.count(OPT_HELP)) {
+	if (in.fail()) {
 		print_diagnostics_and_exit(std::string{"Input file "} + input_file + " can not be read", exe, options);
 	}
 

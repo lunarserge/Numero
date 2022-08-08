@@ -33,3 +33,5 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD_REQUIRED YES)
 
 target_link_libraries(${PROJECT_NAME} Boost::date_time Boost::program_options)
+
+add_subdirectory(test)
