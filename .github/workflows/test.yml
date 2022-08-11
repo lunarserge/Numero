@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  linux-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3.0.2
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3.0.0
+      with:
+        name: linux-numero
+        path: build/numero
+  
+    - name: Test
+      run: |
+        cd build/test
+        ctest
