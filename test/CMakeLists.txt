@@ -1,7 +1,12 @@
 find_package(Python REQUIRED)
 enable_testing()
 
-set(NUMERO ../${PROJECT_NAME})
+if (WIN32)
+    set(NUMERO ../${CMAKE_BUILD_TYPE}/${PROJECT_NAME})
+else()
+    set(NUMERO ../${PROJECT_NAME})
+endif (WIN32)
+
 set(TESTROOT ../../test)
 
 file(GLOB tests "t_*")
