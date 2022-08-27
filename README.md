@@ -1,4 +1,8 @@
 # Numero
+
+[![GitHub](https://img.shields.io/github/license/lunarserge/Numero)](https://github.com/lunarserge/Numero/blob/master/LICENSE)
+[![Build](https://github.com/lunarserge/Numero/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/lunarserge/Numero/actions/workflows/build.yml)
+
 Connect with the world in a new way.
 
 All of us pass numerous anniversaries in our life. Typically, people count tens of years passed as a significant holiday.
