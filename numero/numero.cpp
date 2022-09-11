@@ -77,33 +77,30 @@ void load_time_zone(std::filesystem::path& exe) {
  *  Prepares for the computation by parsing the options and doing initial setup
  */
 std::ifstream prepare(int argc, char** argv) {
-	const char *OPT_HELP = "h", *OPT_OUTPUT_LINES = "n", *OPT_TIME_ZONE_ID = "tz", *OPT_INPUT_FILE = "input-file";
+	const std::string OPT_HELP{"help"}, OPT_OUTPUT_LINES{"output-lines"}, OPT_TIME_ZONE_ID{"time-zone"}, OPT_INPUT_FILE{"input-file"};
 	std::string input_file;
 
 	boost::program_options::options_description options{"Options"};
 	options.add_options()
-		(OPT_HELP, "produce help message")
-		(OPT_OUTPUT_LINES, boost::program_options::value<numero::options::output_lines_number_t>(&numero::options::output_lines_number)->default_value(100), "limit number of holidays in the output to n lines")
-		(OPT_TIME_ZONE_ID, boost::program_options::value<std::string>(&time_zone_string)->default_value(""), "specify output time zone (see README for details)")
+		((OPT_HELP + ",h").c_str(), "produce help message")
+		((OPT_OUTPUT_LINES + ",n").c_str(), boost::program_options::value<numero::options::output_lines_number_t>(&numero::options::output_lines_number)->default_value(100),
+			"limit number of holidays in the output to 'arg' lines")
+		((OPT_TIME_ZONE_ID + ",tz").c_str(), boost::program_options::value<std::string>(&time_zone_string)->default_value(""), "specify output time zone (see README for details)")
 	;
 	boost::program_options::options_description all_options{"All"};
 	all_options.add_options()
-		(OPT_INPUT_FILE, boost::program_options::value<std::string>(&input_file), "input dates")
+		(OPT_INPUT_FILE.c_str(), boost::program_options::value<std::string>(&input_file), "input dates")
 	;
 	all_options.add(options);
 	boost::program_options::positional_options_description p_options;
-	p_options.add(OPT_INPUT_FILE, -1);
+	p_options.add(OPT_INPUT_FILE.c_str(), -1);
 
 	std::filesystem::path exe{argv[0]};
 	boost::program_options::variables_map vm;
 	try {
 		boost::program_options::store(boost::program_options::command_line_parser(argc, argv).options(all_options).positional(p_options).run(), vm);
 	} catch (boost::program_options::unknown_option& e) {
-		std::string s = e.get_option_name();
-		if (s.substr(0, 2) != "--") {
-			s += ". Notice that options start with '--'";
-		}
-		print_diagnostics_and_exit(std::string{"Unknown option: "} + s, exe, options);
+		print_diagnostics_and_exit(std::string{"Unknown option: "} + e.get_option_name(), exe, options);
 	} catch (boost::program_options::invalid_option_value&) {
 		print_diagnostics_and_exit(std::string{"--"} + OPT_OUTPUT_LINES + " option requires a number", exe, options);
 	} catch (boost::program_options::multiple_occurrences&) {
@@ -111,7 +108,7 @@ std::ifstream prepare(int argc, char** argv) {
 	}
 	boost::program_options::notify(vm);
 
-	bool help = vm.count(OPT_HELP);
+	bool help = vm.count(OPT_HELP.c_str());
 	if (input_file.empty()) {
 		if (help) {
 			print_help(exe, options);
