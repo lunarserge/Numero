@@ -77,15 +77,28 @@ void load_time_zone(std::filesystem::path& exe) {
  *  Prepares for the computation by parsing the options and doing initial setup
  */
 std::ifstream prepare(int argc, char** argv) {
-	const std::string OPT_HELP{"help"}, OPT_OUTPUT_LINES{"output-lines"}, OPT_TIME_ZONE_ID{"time-zone"}, OPT_INPUT_FILE{"input-file"};
+	const std::string OPT_HELP{"help"};
+	const char OPT_HELP_SHORT{'h'};
+	const char* OPT_HELP_TEXT{"produce help message"};
+
+	const std::string OPT_OUTPUT_LINES{"output-lines"};
+	const char OPT_OUTPUT_LINES_SHORT{'n'};
+	const char* OPT_OUTPUT_LINES_TEXT{"limit number of holidays in the output to 'arg' lines"};
+	const numero::options::output_lines_number_t OPT_OUTPUT_LINES_DEFAULT{100};
+
+	const std::string OPT_TIME_ZONE_ID{"time-zone"}; /* time-zone option doesn't have short version */
+	const char* OPT_TIME_ZONE_ID_TEXT{"specify output time zone (see README for details)"};
+
+	const std::string OPT_INPUT_FILE{"input-file"};
 	std::string input_file;
 
 	boost::program_options::options_description options{"Options"};
 	options.add_options()
-		((OPT_HELP + ",h").c_str(), "produce help message")
-		((OPT_OUTPUT_LINES + ",n").c_str(), boost::program_options::value<numero::options::output_lines_number_t>(&numero::options::output_lines_number)->default_value(100),
-			"limit number of holidays in the output to 'arg' lines")
-		((OPT_TIME_ZONE_ID + ",tz").c_str(), boost::program_options::value<std::string>(&time_zone_string)->default_value(""), "specify output time zone (see README for details)")
+		((OPT_HELP + ',' + OPT_HELP_SHORT).c_str(), OPT_HELP_TEXT)
+		((OPT_OUTPUT_LINES + ',' + OPT_OUTPUT_LINES_SHORT).c_str(),
+			boost::program_options::value<numero::options::output_lines_number_t>(&numero::options::output_lines_number)->default_value(OPT_OUTPUT_LINES_DEFAULT),
+			OPT_OUTPUT_LINES_TEXT)
+		(OPT_TIME_ZONE_ID.c_str(), boost::program_options::value<std::string>(&time_zone_string)->default_value(""), OPT_TIME_ZONE_ID_TEXT)
 	;
 	boost::program_options::options_description all_options{"All"};
 	all_options.add_options()

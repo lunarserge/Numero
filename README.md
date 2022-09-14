@@ -20,9 +20,9 @@ Usage (from the command line):
     "Numero.exe" [options] Dates.csv
 
 Options:
-* --h:                   produce help message
-* --n arg (=100):        limit number of holidays in the output to n lines
-* --tz arg:              specify output time zone
+* -h [ --help]:                    produce help message
+* -n [ --output-lines] arg (=100): limit number of holidays in the output to 'arg' lines
+* --time-zone arg:                 specify output time zone
 
 Dates.csv: input dates in CSV (Comma Delimited) format.
 
@@ -32,11 +32,11 @@ Numero will output nearest holidays sorted from the nearest towards more distant
 
 ### Options
 
-**--h**: Produces help message, nothing else to say about it.
+**-h** or **--help**: Produces help message, nothing else to say about it.
 
-**--n**: For a reasonably sized group the output can easily overflow the shell window. Thus, this option limits the number of lines in the output (with 100 closest holidays being the default).
+**-n** or **--output-lines**: For a reasonably sized group the output can easily overflow the shell window. Thus, this option limits the number of lines in the output (with 100 closest holidays being the default).
 
-**--tz**: The exact holiday time depends on where you are regarding to time zones. By default, Numero uses the local time zone.
+**--time-zone**: The exact holiday time depends on where you are regarding to time zones. By default, Numero uses the local time zone.
 But if you are doing the calculation for somebody else (like intend to give it to your mother living in another time zone) then you may want to use this option.
 The target time zone is specified by a value from the ID column of `date_time_zonespec.csv` file that is redistributed with Numero - so look there to pick what you need.
 As a little nit-picking Numero works correctly with daylight saving time.
