@@ -77,12 +77,25 @@ There are couple of self-explaining inline comments in numero.cpp / main re desi
 
 Numero depends quite a bit on Boost C++ libraries (http://boost.org). See `NOTICE.txt` for the license terms.
 
-I am using Visual Studio 2019 for the development. Perform these steps for a complete build from source:
-1. `git clone --recurse-submodules https://github.com/lunarserge/Numero ` (clone the repository, including the Boost submodule dependency)
-2. `cd Numero\boost`
-3. `bootstrap` (prepare the Boost.Build system for use, see https://www.boost.org/doc/libs/1_75_0/more/getting_started/windows.html#simplified-build-from-source)
-4. `.\b2 --with-program_options --with-date_time` (invoke Boost.Build to build required Boost libraries)
-5. Launch Visual Studio and complete the solution build from there
+The build is implemented via `cmake` for Windows, Ubuntu and macOS.
+
+Steps for local build (same for all platforms):
+1. Install Boost v1.74.0 or later (https://www.boost.org). Installing Boost is generally outside of Numero project scope,
+but see below for some hints if you need them
+2. `git clone https://github.com/lunarserge/Numero`
+3. `cmake -B bld` where `bld` is a directory name where you want the build to happen
+4. `cmake --build bld` where `bld` is the build directory
+5. Numero executable will be built inside `bld` directory on Ubuntu/macOS and inside `bld\Release` directory on Windows
+6. `date_time_zonespec.csv` file from Numero home directory should be copied to the same directory where Numero executable resides for time zone functionality
+
+An automated build via GitHub Actions is scheduled each Sunday, the artifacts are available at https://github.com/lunarserge/Numero/actions
+(search the webpage for 'Scheduled').
+
+### Boost Installation Hints (no promises here, but this is what is working for Numero developers)
+
+1. **Windows.** We don't know where pre-built Boost can be found. However, the latest version can be downloaded in source from https://www.boost.org. Boost should be extracted under `C:\Boost` directory (like `C:\Boost\boost_1_80_0\<subdirs>`) - otherwise `cmake` won't find it. Boost needs to be built as per Getting Started instructions on the right at the Boost home page (e.g., https://www.boost.org/doc/libs/1_80_0/more/getting_started/windows.html#simplified-build-from-source for Boost 1.80). You only need `Program Options` and `Date Time` components from Boost, so `.\b2 --with-program_options --with-date_time` (or whatever this changes to in the future) will suffice
+2. **Ubuntu.** `sudo apt-get install libboost-all-dev`
+3. **macOS.** `brew install boost`
 
 ## Release 1.0 Notes
 
