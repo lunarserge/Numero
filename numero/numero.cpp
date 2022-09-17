@@ -193,9 +193,12 @@ int main(int argc, char** argv) {
 		}
 	} while (i < last_group);
 
-	std::partial_sort(holidays.begin(), holidays.begin() + numero::options::output_lines_number, holidays.end());
+	size_t holidays_size = holidays.size();
+	size_t output_lines_number = holidays_size > numero::options::output_lines_number ? numero::options::output_lines_number : holidays_size;
+	std::partial_sort(holidays.begin(), holidays.begin() + output_lines_number - 1, holidays.end());
+	
 	std::cout << "Results listed in " << ((numero::options::time_zone == 0) ? "local" : time_zone_string) << " time zone:" << std::endl;
-	for (numero::options::output_lines_number_t i = 0; i < numero::options::output_lines_number; ++i) {
+	for (numero::options::output_lines_number_t i = 0; i < output_lines_number; ++i) {
 		std::cout << holidays[i] << std::endl;
 	}
 	return 0;
