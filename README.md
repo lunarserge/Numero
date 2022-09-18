@@ -77,18 +77,22 @@ There are couple of self-explaining inline comments in numero.cpp / main re desi
 
 Numero depends quite a bit on Boost C++ libraries (http://boost.org). See `NOTICE.txt` for the license terms.
 
-The build is implemented via `cmake` for Windows, Ubuntu and macOS.
+### Prerequisities
+Tools required: git, C/C++ compiler, cmake, python
 
+### How to Build
+The build is implemented via `cmake` for Windows, Ubuntu and macOS.
 Steps for local build (same for all platforms):
 1. Install Boost v1.74.0 or later (https://www.boost.org). Installing Boost is generally outside of Numero project scope,
 but see below for some hints if you need them
 2. `git clone https://github.com/lunarserge/Numero`
-3. 'cd Numero'
+3. `cd Numero`
 4. `cmake -B bld` where `bld` is a directory name where you want the build to happen
 5. `cmake --build bld` where `bld` is the build directory
-6. Numero executable will be built inside `bld` directory on Ubuntu/macOS and inside `bld\Release` directory on Windows
+6. Numero executable will be built inside `bld` directory on Ubuntu/macOS and inside `bld\Debug` directory on Windows
 7. `date_time_zonespec.csv` file from Numero home directory should be copied to the same directory where Numero executable resides for time zone functionality
 
+### Automated build
 An automated build via GitHub Actions is scheduled each Sunday, the artifacts are available at https://github.com/lunarserge/Numero/actions
 (search the webpage for 'Scheduled').
 
