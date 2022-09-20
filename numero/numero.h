@@ -49,14 +49,14 @@ extern const boost::posix_time::ptime CURRENT_TIME;
 namespace numero {
 
 	/*
+	 * Type for holding the number of holiday lines in the output
+	 */
+	using output_lines_number_t = unsigned;
+
+	/*
 	 * Namespace to group run options together
 	 */
 	namespace options {
-
-		/*
-		 * Type for holding the maximum number of holiday lines in the output
-		 */
-		using output_lines_number_t = unsigned;
 
 		/*
 		 * Maximum number of holiday lines in the output
