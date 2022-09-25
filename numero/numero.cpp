@@ -22,7 +22,7 @@ const boost::posix_time::ptime CURRENT_TIME = boost::posix_time::second_clock::u
 /*
  * Maximum number of holiday lines in the output
  */
-numero::options::output_lines_number_t numero::options::output_lines_number;
+numero::output_lines_number_t numero::options::output_lines_number;
 
 /*
  * Target time zone for the output correction
@@ -84,7 +84,7 @@ std::ifstream prepare(int argc, char** argv) {
 	const std::string OPT_OUTPUT_LINES{"output-lines"};
 	const char OPT_OUTPUT_LINES_SHORT{'n'};
 	const char* OPT_OUTPUT_LINES_TEXT{"limit number of holidays in the output to 'arg' lines"};
-	const numero::options::output_lines_number_t OPT_OUTPUT_LINES_DEFAULT{100};
+	const numero::output_lines_number_t OPT_OUTPUT_LINES_DEFAULT{100};
 
 	const std::string OPT_TIME_ZONE_ID{"time-zone"}; /* time-zone option doesn't have short version */
 	const char* OPT_TIME_ZONE_ID_TEXT{"specify output time zone (see README for details)"};
@@ -96,7 +96,7 @@ std::ifstream prepare(int argc, char** argv) {
 	options.add_options()
 		((OPT_HELP + ',' + OPT_HELP_SHORT).c_str(), OPT_HELP_TEXT)
 		((OPT_OUTPUT_LINES + ',' + OPT_OUTPUT_LINES_SHORT).c_str(),
-			boost::program_options::value<numero::options::output_lines_number_t>(&numero::options::output_lines_number)->default_value(OPT_OUTPUT_LINES_DEFAULT),
+			boost::program_options::value<numero::output_lines_number_t>(&numero::options::output_lines_number)->default_value(OPT_OUTPUT_LINES_DEFAULT),
 			OPT_OUTPUT_LINES_TEXT)
 		(OPT_TIME_ZONE_ID.c_str(), boost::program_options::value<std::string>(&time_zone_string)->default_value(""), OPT_TIME_ZONE_ID_TEXT)
 	;
@@ -193,9 +193,12 @@ int main(int argc, char** argv) {
 		}
 	} while (i < last_group);
 
-	std::partial_sort(holidays.begin(), holidays.begin() + numero::options::output_lines_number, holidays.end());
+	std::vector<Holiday>::size_type holidays_size = holidays.size();
+	numero::output_lines_number_t output_lines_number = holidays_size > numero::options::output_lines_number ? numero::options::output_lines_number : holidays_size;
+	std::partial_sort(holidays.begin(), holidays.begin() + output_lines_number, holidays.end());
+	
 	std::cout << "Results listed in " << ((numero::options::time_zone == 0) ? "local" : time_zone_string) << " time zone:" << std::endl;
-	for (numero::options::output_lines_number_t i = 0; i < numero::options::output_lines_number; ++i) {
+	for (unsigned i = 0; i < output_lines_number; ++i) {
 		std::cout << holidays[i] << std::endl;
 	}
 	return 0;
