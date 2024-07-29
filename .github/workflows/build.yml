@@ -5,6 +5,8 @@ on:
     # Run each Sun
     - cron: '0 0 * * 0'
   push:
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 
