@@ -44,6 +44,11 @@ constexpr unsigned MAX_ENTITIES = sizeof(group_id_t) * 8;
 extern const boost::posix_time::ptime CURRENT_TIME;
 
 /*
+ * Base time for calculations if provided
+ */
+extern boost::posix_time::ptime BASE_TIME;
+
+/*
  * Namespace for global objects so that it is clear in the code that those are global
  */
 namespace numero {

@@ -46,7 +46,7 @@ Entity::Entity(const std::string& s) {
     try {
         boost::gregorian::date date{static_cast<boost::gregorian::greg_year>(year), static_cast<boost::gregorian::greg_month>(month), static_cast<boost::gregorian::greg_day>(day)};
         boost::posix_time::time_duration td{hour, minute, 0};
-        age = boost::posix_time::time_period{{date, td}, CURRENT_TIME}.length();
+        age = boost::posix_time::time_period{{date, td}, BASE_TIME}.length();
     } catch (boost::gregorian::bad_month&) {
         std::cerr << "(ERROR) Input file contains invalid month: " << month << ". Should be between 1 and 12. Exiting." << std::endl;
         exit(1);
