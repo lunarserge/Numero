@@ -30,6 +30,11 @@ public:
     Entity(const std::string& s);
 
     /*
+     * Constructs entity from a CSV string with a custom base time
+     */
+    Entity(const std::string& s, const boost::posix_time::ptime& base_time);
+
+    /*
      * Gets entity name
      */
     const std::string& get_name() const noexcept {

@@ -6,6 +6,8 @@ Options:
                                    'arg' lines
   --time-zone arg                  specify output time zone (see README for 
                                    details)
+  --b arg                          specify base time for calculations in the 
+                                   format month,day,year,hour,minute
 
 Dates.csv: input dates in CSV (Comma Delimited) format as per README
 

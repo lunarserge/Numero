@@ -20,6 +20,11 @@
 const boost::posix_time::ptime CURRENT_TIME = boost::posix_time::second_clock::universal_time();
 
 /*
+ * Base time for calculations if provided
+ */
+boost::posix_time::ptime BASE_TIME = CURRENT_TIME;
+
+/*
  * Maximum number of holiday lines in the output
  */
 numero::output_lines_number_t numero::options::output_lines_number;
@@ -89,6 +94,9 @@ std::ifstream prepare(int argc, char** argv) {
 	const std::string OPT_TIME_ZONE_ID{"time-zone"}; /* time-zone option doesn't have short version */
 	const char* OPT_TIME_ZONE_ID_TEXT{"specify output time zone (see README for details)"};
 
+	const std::string OPT_BASE_TIME{"b"};
+	const char* OPT_BASE_TIME_TEXT{"specify base time for calculations in the format month,day,year,hour,minute"};
+
 	const std::string OPT_INPUT_FILE{"input-file"};
 	std::string input_file;
 
@@ -99,6 +107,7 @@ std::ifstream prepare(int argc, char** argv) {
 			boost::program_options::value<numero::output_lines_number_t>(&numero::options::output_lines_number)->default_value(OPT_OUTPUT_LINES_DEFAULT),
 			OPT_OUTPUT_LINES_TEXT)
 		(OPT_TIME_ZONE_ID.c_str(), boost::program_options::value<std::string>(&time_zone_string)->default_value(""), OPT_TIME_ZONE_ID_TEXT)
+		((OPT_BASE_TIME + ',').c_str(), boost::program_options::value<std::string>(), OPT_BASE_TIME_TEXT)
 	;
 	boost::program_options::options_description all_options{"All"};
 	all_options.add_options()
@@ -137,6 +146,36 @@ std::ifstream prepare(int argc, char** argv) {
 
 	if (!time_zone_string.empty()) {
 		load_time_zone(exe);
+	}
+
+	if (vm.count(OPT_BASE_TIME.c_str())) {
+		std::string base_time_str = vm[OPT_BASE_TIME.c_str()].as<std::string>();
+		std::string::size_type p1, p2{base_time_str.find(',')};
+		int month = std::stoi(base_time_str.substr(0, p2));
+
+		p2 = base_time_str.find(',', p1 = ++p2);
+		int day = std::stoi(base_time_str.substr(p1, p2-p1));
+
+		p2 = base_time_str.find(',', p1 = ++p2);
+		int year = std::stoi(base_time_str.substr(p1, p2-p1));
+
+		p2 = base_time_str.find(',', p1 = ++p2);
+		int hour = std::stoi(base_time_str.substr(p1, p2-p1));
+
+		p2 = base_time_str.find(',', p1 = ++p2);
+		int minute = std::stoi(base_time_str.substr(p1, p2-p1));
+
+		try {
+			boost::gregorian::date date{static_cast<boost::gregorian::greg_year>(year), static_cast<boost::gregorian::greg_month>(month), static_cast<boost::gregorian::greg_day>(day)};
+			boost::posix_time::time_duration td{hour, minute, 0};
+			BASE_TIME = boost::posix_time::ptime{date, td};
+		} catch (boost::gregorian::bad_month&) {
+			print_diagnostics_and_exit("Invalid month in base time", exe, options);
+		} catch (boost::gregorian::bad_year&) {
+			print_diagnostics_and_exit("Invalid year in base time", exe, options);
+		} catch (boost::gregorian::bad_day_of_month&) {
+			print_diagnostics_and_exit("Invalid day in base time", exe, options);
+		}
 	}
 
 	std::ifstream in{input_file};
